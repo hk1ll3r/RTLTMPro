@@ -115,8 +115,8 @@ namespace RTLTMPro
                         bool isAfterWhiteSpace = Char32Utils.IsWhiteSpace(previousCharacter);
                         bool isAfterNumber = Char32Utils.IsNumber(previousCharacter, preserveNumbers, farsi);
                         bool isUnderline = characterAtThisIndex == '_';
-                        bool isSpecialPunctuation = characterAtThisIndex is '.' or '،' or '؛' or '؟';
-                        bool isBeforeSpecialPunctuation = nextCharacter is '.' or '،' or '؛' or '؟';
+                        bool isSpecialPunctuation = characterAtThisIndex is '.' or '،' or '؛' or '؟' or '=';
+                        bool isBeforeSpecialPunctuation = nextCharacter is '.' or '،' or '؛' or '؟' or '=';
                         bool isAfterQuote = Char32Utils.IsQuote(previousCharacter);
                         bool isBeforeQuote = Char32Utils.IsQuote(nextCharacter);
                         bool isClosingBracket = characterAtThisIndex is '(';
