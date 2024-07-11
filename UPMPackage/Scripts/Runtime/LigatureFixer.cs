@@ -114,6 +114,7 @@ namespace RTLTMPro
                         bool isBeforeWhiteSpace = Char32Utils.IsWhiteSpace(nextCharacter);
                         bool isAfterWhiteSpace = Char32Utils.IsWhiteSpace(previousCharacter);
                         bool isAfterNumber = Char32Utils.IsNumber(previousCharacter, preserveNumbers, farsi);
+                        bool isBeforeNumber = Char32Utils.IsNumber(nextCharacter, preserveNumbers, farsi);
                         bool isUnderline = characterAtThisIndex == '_';
                         bool isSpecialPunctuation = characterAtThisIndex is '.' or '،' or '؛' or '؟' or '=';
                         bool isBeforeSpecialPunctuation = nextCharacter is '.' or '،' or '؛' or '؟' or '=';
@@ -124,6 +125,9 @@ namespace RTLTMPro
                         bool isBeforeBracket = nextCharacter is ')' or '(';
                         bool isAfterBracket = previousCharacter is ')' or '(';
                         bool isQuote = Char32Utils.IsQuote(characterAtThisIndex);
+                        bool isAfterLetter = Char32Utils.IsLetter(previousCharacter);
+                        bool isBeforeLetter = Char32Utils.IsLetter(nextCharacter);
+
 
                         if (isBeforeRTLCharacter && isAfterRTLCharacter ||
                             isAfterWhiteSpace && isSpecialPunctuation ||
@@ -135,6 +139,8 @@ namespace RTLTMPro
                             isQuote && isAfterBracket ||                                    // Corrects ") in .("المريخ") and :"( in :"(المريخ)":
                             isQuote && isBeforeBracket ||                                   // Corrects (" in ("المريخ") and )": in :"(المريخ)":
                             isClosingBracket && isBeforeSpecialPunctuation ||               // Corrects .( in .(المريخ)
+                            isQuote && (isAfterLetter || isAfterNumber) ||                  // Corrects "aaa in "aaaموسيقى" 
+                            isQuote && (isBeforeLetter || isBeforeNumber) ||                // Corrects aaa" in "موسيقىaaa"
                             (isBeforeRTLCharacter || isAfterRTLCharacter) && isUnderline) 
                         {
                             FlushBufferToOutput(LtrTextHolder, output);
