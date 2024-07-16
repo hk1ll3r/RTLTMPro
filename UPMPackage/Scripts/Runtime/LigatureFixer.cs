@@ -141,6 +141,7 @@ namespace RTLTMPro
                             isClosingBracket && isBeforeSpecialPunctuation ||               // Corrects .( in .(المريخ)
                             isQuote && (isAfterLetter || isAfterNumber) ||                  // Corrects "aaa in "aaaموسيقى" 
                             isQuote && (isBeforeLetter || isBeforeNumber) ||                // Corrects aaa" in "موسيقىaaa"
+                            isSpecialPunctuation && isAfterLetter ||                        // Corrects .E in .ENGAGE LINK
                             (isBeforeRTLCharacter || isAfterRTLCharacter) && isUnderline) 
                         {
                             FlushBufferToOutput(LtrTextHolder, output);
